@@ -2,6 +2,7 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const Leaders = require("../models/leaders");
 const leaderRouter = express.Router();
+const authenticate = require("../authenticate");
 
 leaderRouter.route("/")
 .get((req,res,next)=>{
@@ -13,7 +14,7 @@ leaderRouter.route("/")
     }, err=> next(err))
     .catch(err => next(err))
 })
-.post((req,res,next)=>{
+.post(authenticate.verifyUser,(req,res,next)=>{
     Leaders.create(req.body)
     .then(leaders =>{
         res.statusCode = 200;
@@ -22,11 +23,11 @@ leaderRouter.route("/")
     }, err => next(err))
     .catch(err => next(err))
 })
-.put((req,res,next)=>{
+.put(authenticate.verifyUser,(req,res,next)=>{
     res.statusCode = 403;
     res.end("PUT Operation is not permitted!");
 })
-.delete((req,res,next)=>{
+.delete(authenticate.verifyUser,(req,res,next)=>{
     Leaders.remove({})
     .then(leaders =>{
         res.statusCode = 200;
@@ -45,11 +46,11 @@ leaderRouter.route("/:leaderId")
         res.json(leader);
     })
 })
-.post((req,res,next)=>{
+.post(authenticate.verifyUser,(req,res,next)=>{
     res.statusCode = 403;
     res.end("POST operation not supported for /Leaders/"+req.params.leaderId);
 })
-.put((req,res,next)=>{
+.put(authenticate.verifyUser,(req,res,next)=>{
     Leaders.findByIdAndUpdate(req.params.leaderId,{
         $set: req.body
     },{
@@ -62,7 +63,7 @@ leaderRouter.route("/:leaderId")
     }, err=> next(err))
     .catch(err => next(err))
 })
-.delete((req,res,next)=>{
+.delete(authenticate.verifyUser,(req,res,next)=>{
     Leaders.findByIdAndRemove(req.params.leaderId)
     .then( resp =>{
         res.statusCode = 200;
