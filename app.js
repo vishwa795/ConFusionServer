@@ -16,7 +16,7 @@ var dishRouter = require("./routes/dishRouter");
 var promoRouter = require("./routes/promoRouter");
 var leaderRouter = require("./routes/leaderRouter");
 var uploadRouter = require("./routes/uploadRouter");
-var favoriteRouter = require("./routes/favorites");
+var favoriteRouter = require("./routes/favoriteRouter");
 var Dishes = require("./models/dishes");
 const { Buffer } = require('buffer');
 

@@ -6,6 +6,7 @@ const authenticate = require('../authenticate');
 const cors = require("./cors");
 
 favoriteRouter.route("/")
+.options(cors.corsWithOptions, (req,res) => { res.sendStatus(200); })
 .get(cors.corsWithOptions,authenticate.verifyUser,(req,res,next)=>{
     Favorite.findOne({user:req.user._id})
     .populate('user')
@@ -60,6 +61,7 @@ favoriteRouter.route("/")
 })
 
 favoriteRouter.route("/:dishId")
+.options(cors.corsWithOptions, (req,res) => { res.sendStatus(200); })
 .get(cors.corsWithOptions,authenticate.verifyUser, (req,res,next)=>{
     res.statusCode = 403;
     res.end("GET operation not suported");
