@@ -1,13 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
-var session = require("express-session");
-var FileStore = require("session-file-store")(session);
 var passport = require("passport");
-var authenticate = require("./authenticate");
 var config = require("./config");
 
 var indexRouter = require('./routes/index');
